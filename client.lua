@@ -59,7 +59,7 @@ function PrisonMenu(level)
 	table.insert(elements, {label = ('📍 ZhoNNz 📍'), value = 'location'})
 
 	end
-	table.insert(elements, {label = ('✖️ Menüyü Kapat ✖️'), value = 'kapat'})
+	table.insert(elements, {label = ('✖️ Close the Menu ✖️'), value = 'kapat'})
   
   
 	  ESX.UI.Menu.CloseAll()
