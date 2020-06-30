@@ -1,8 +1,7 @@
 ESX = nil
 took = false
+
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
-
 
 
 RegisterServerEvent("rpv_prisonnpc:BuyItem")
