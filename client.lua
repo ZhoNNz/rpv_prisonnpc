@@ -22,8 +22,8 @@ Citizen.CreateThread(function()
 end)
 
 
-local saticicoords = {x = 1790.35, y = 2577.31, z = 45.0}  		
-local Olay =  {x = 1790.35, y = 2577.31, z = 45.8}  	
+local sellermancoords = {x = 1790.35, y = 2577.31, z = 45.0}  		
+local Event =  {x = 1790.35, y = 2577.31, z = 45.8}  	
 local level =   0
 
 
@@ -36,27 +36,27 @@ function PrisonMenu(level)
 	local elements = {}
   
  
-	table.insert(elements, {label = ('Maymuncuk Al | 300$'), value = 'maymunck'})
+	table.insert(elements, {label = ('lockpick buy | 300$'), value = 'lockpick'})
   
 	if(level > 3 ) then
   
-	  table.insert(elements, {label = ('Telefon | 400$'), value = 'telefon'})
+	  table.insert(elements, {label = ('phone | 400$'), value = 'phone'})
 	end
 
 	if(level > 5 ) then
   
-		table.insert(elements, {label = ('Telsiz | 400$'), value = 'telsiz'})
+		table.insert(elements, {label = ('radio | 400$'), value = 'radio'})
 	  end
 
 	  if(level > 7 ) then
   
-		table.insert(elements, {label = ('Bıçak | 450$'), value = 'bıçak'})
+		table.insert(elements, {label = ('knife | 450$'), value = 'knife'})
 	  end
 
 
 
 	if(level > 80) then
-	table.insert(elements, {label = ('📍 Cloud Fivem 📍'), value = 'location'})
+	table.insert(elements, {label = ('📍 ZhoNNz 📍'), value = 'location'})
 
 	end
 	table.insert(elements, {label = ('✖️ Menüyü Kapat ✖️'), value = 'kapat'})
@@ -67,7 +67,7 @@ function PrisonMenu(level)
 	  ESX.UI.Menu.Open(
 		  'default', GetCurrentResourceName(), 'action_menu',
 		  {
-			  title    = ('Güven '..level..'/100'),
+			  title    = ('Trust '..level..'/100'),
 			  align    = 'top-left',
 			  elements = elements
 		  },
@@ -75,24 +75,24 @@ function PrisonMenu(level)
   --
 		  ESX.UI.Menu.CloseAll()	
 	  		  
-	if data.current.value == 'maymunck' then
-		TriggerServerEvent("rpv_prisonnpc:maymuncuk")
+	if data.current.value == 'lockpick' then
+		TriggerServerEvent("rpv_prisonnpc:lockpick")
 		TriggerServerEvent("rpv_prisonnpc:LevelUpdate", 1)		
 	ESX.UI.Menu.CloseAll()
 
-	elseif data.current.value == 'telefon' then
-		TriggerServerEvent("rpv_prisonnpc:telefon")
+	elseif data.current.value == 'phone' then
+		TriggerServerEvent("rpv_prisonnpc:phone")
 		TriggerServerEvent("rpv_prisonnpc:LevelUpdate", 1)		
 	ESX.UI.Menu.CloseAll()    
 
-	elseif data.current.value == 'telsiz' then
-		TriggerServerEvent("rpv_prisonnpc:telsiz")
+	elseif data.current.value == 'radio' then
+		TriggerServerEvent("rpv_prisonnpc:radio")
 		TriggerServerEvent("rpv_prisonnpc:LevelUpdate", 1)		
 	ESX.UI.Menu.CloseAll()  
 		
 		
-	elseif data.current.value == 'bıçak' then
-		TriggerServerEvent("rpv_prisonnpc:bıçak")
+	elseif data.current.value == 'knife' then
+		TriggerServerEvent("rpv_prisonnpc:knife")
 		TriggerServerEvent("rpv_prisonnpc:LevelUpdate", 2)		
 	ESX.UI.Menu.CloseAll()    
 
@@ -102,38 +102,35 @@ function PrisonMenu(level)
   end
 
 
----- NPC KISMI
+---- NPC AREA
   Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
             local plyCoords = GetEntityCoords(GetPlayerPed(-1), false) 
-            local dist = Vdist(plyCoords.x, plyCoords.y, plyCoords.z, Olay.x, Olay.y, Olay.z)
+            local dist = Vdist(plyCoords.x, plyCoords.y, plyCoords.z, Event.x, Event.y, Event.z)
 
 			if dist <= 25.0  then
 				if not DoesEntityExist(dealer) then
-				RequestModel("csb_rashcosvki")   -- npcleri buradan değiştirebilirsiniz
-				while not HasModelLoaded("csb_rashcosvki") do
-				Wait(10)
-				end
-				dealer = CreatePed(26, "csb_rashcosvki", saticicoords.x, saticicoords.y, saticicoords.z, 83.65, false, false)
-				SetEntityHeading(dealer, 1.8)
-				SetBlockingOfNonTemporaryEvents(dealer, true)
-				TaskStartScenarioInPlace(dealer, "WORLD_HUMAN_AA_SMOKE", 0, false) -- NPC 'nin hangi eylemi yapacagını gosterırsınız
-				end
-				
-			-- DrawMarker(25, Olay.x, Olay.y, Olay.z-0.90, 0, 0, 0, 0, 0, 0, 1.301, 1.3001, 1.3001, 0, 205, 250, 200, 0, 0, 0, 0)   --- NPC altındaki daire istersin açarsın
+					RequestModel("csb_rashcosvki") --for npc change
+					while not HasModelLoaded("csb_rashcosvki") do
+						Wait(10)
+					end
+					dealer = CreatePed(26, "csb_rashcosvki", sellermancoords.x, sellermancoords.y, sellermancoords.z, 83.65, false, false)
+					SetEntityHeading(dealer, 1.8)
+					SetBlockingOfNonTemporaryEvents(dealer, true)
+					TaskStartScenarioInPlace(dealer, "WORLD_HUMAN_AA_SMOKE", 0, false) 
+				end		
 			else
 			Citizen.Wait(1500)
 			end
 
             if dist <= 0.6 then
-				DrawText3D(Olay.x, Olay.y, Olay.z, "[E] Konus")
+				DrawText3D(Event.x, Event.y, Event.z, "[E] Talk")
 				if IsControlJustPressed(0, Keys['E']) then
-				-- NPCMenu()
-				ESX.TriggerServerCallback('rpv_prisonnpc:GetLevel', function(prisonpoint) 
-				PrisonMenu(tonumber(prisonpoint))
+					ESX.TriggerServerCallback('rpv_prisonnpc:GetLevel', function(prisonpoint) 
+					PrisonMenu(tonumber(prisonpoint))
 				end)
-				Citizen.Wait(500)
+					Citizen.Wait(500)
 				end
             end
         end
@@ -155,138 +152,3 @@ function DrawText3D(x, y, z, text)
     local factor = (string.len(text)) / 370
 	DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 90)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- Düz kısımlar
-
-
--- NPCMenu = function()
--- 	local player = PlayerPedId()
--- 	FreezeEntityPosition(player,true)
-	
--- 	local elements = {
--- 		{ label = "Satın al", action = "Satis_Buy_Menu" },	}
-		
--- 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), "esx_Satis_main_menu",
--- 		{
--- 			title    = "Hapishane Kaçakcısı",
--- 			align    = "top-left",
--- 			elements = elements
--- 		},
--- 	function(data, menu)
--- 		local action = data.current.action
-
--- 		if action == "Satis_Buy_Menu" then
---             SatinAlmaMenu()
--- 		elseif action == "PawnShop_Sell_Menu" then
--- 			Kapat()
--- 		end	
--- 	end, function(data, menu)
--- 		menu.close()
--- 		insideMarker = false
--- 		FreezeEntityPosition(player,false)
--- 	end, function(data, menu)
--- 	end)
--- end
-
--- function SatinAlmaMenu()
--- 	local player = PlayerPedId()
--- 	FreezeEntityPosition(player,true)
--- 	local elements = {}
-			
--- 	for k,v in pairs(Config.Satis) do
--- 		if v.BuyInPawnShop == true then
--- 			table.insert(elements,{label = v.label .. " | "..('<span style="color:green;">%s</span>'):format("$"..v.BuyPrice..""), itemName = v.itemName, BuyInPawnShop = v.BuyInPawnShop, BuyPrice = v.BuyPrice})
--- 		end
--- 	end
-		
--- 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), "PrisonBuyMenu",
--- 		{
--- 			title    = "Ne almak istiyorsun?",
--- 			align    = "top-left",
--- 			elements = elements
--- 		},
--- 	function(data, menu)
--- 			if data.current.itemName == data.current.itemName then
--- 				OpenBuyDialogMenu(data.current.itemName,data.current.BuyPrice)
--- 			end	
--- 	end, function(data, menu)
--- 		menu.close()
--- 		insideMarker = false
--- 		FreezeEntityPosition(player,false)
--- 	end, function(data, menu)
--- 	end)
--- end
-
--- function OpenBuyDialogMenu(itemName, BuyPrice)
--- 	ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'PrisonDialog', {
--- 		title = "Satın Alacak Miktar?"
--- 	}, function(data, menu)
--- 		menu.close()
--- 		amountToBuy = tonumber(data.value)
--- 		totalBuyPrice = (BuyPrice * amountToBuy)
--- 		TriggerServerEvent("rpv_prisonnpc:BuyItem",amountToBuy,totalBuyPrice,itemName)
--- 	end,
--- 	function(data, menu)
--- 		menu.close()	
--- 	end)
--- end
