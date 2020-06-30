@@ -1,5 +1,5 @@
 ESX = nil
-aldi = false
+took = false
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 
@@ -12,12 +12,11 @@ AddEventHandler("rpv_prisonnpc:BuyItem", function(amountToBuy,totalBuyPrice,item
 	if xPlayer.getMoney() >= totalBuyPrice then
 		xPlayer.removeMoney(totalBuyPrice)
 		xPlayer.addInventoryItem(itemName, amountToBuy)
-        -- TriggerClientEvent("esx:showNotification",source,"You paid ~g~$"..totalBuyPrice.."~s~ for "..amountToBuy.."x ~y~"..itemLabel.."~s~")
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = itemLabel .. amountToBuy .. 'x' ..totalBuyPrice.. '$ Ödedin'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = itemLabel .. amountToBuy .. 'x' ..totalBuyPrice.. '$ Paid'})
 
 	else
 
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'Yeterli miktarda paran yok!'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You dont have enough money!'})
 
 	end
 end)
@@ -36,14 +35,13 @@ AddEventHandler("rpv_prisonnpc:LevelUpdate", function(point)
     }, function(prisonpoint)
        local originalpoint =  tonumber(prisonpoint[1].prisonpoint)
        local updatedpoint = originalpoint + point
-       if aldi == true then
+       if took == true then
        MySQL.Async.execute('UPDATE prisonlevel SET prisonpoint=@pointupdate WHERE identifier=@identifier ',
        {
            ['@identifier']   = xPlayer.identifier,
            ['@pointupdate']   = updatedpoint
           
        }, function(prisonpoint2)
-        print(prisonpoint2)
        end)
     end
     end)
@@ -70,7 +68,7 @@ ESX.RegisterServerCallback('rpv_prisonnpc:GetLevel', function(source, cb)
                 ['@identifier'] = xPlayer.identifier
 
             }, function(rowsChanged)
-                TriggerClientEvent('esx:showNotification', source, '~g~Menüyü Tekrar Aç!')
+                TriggerClientEvent('esx:showNotification', source, '~g~Again Talking to man')
             end)
         end
 	end)
@@ -78,8 +76,8 @@ end)
 
 
 
-RegisterServerEvent("rpv_prisonnpc:maymuncuk")
-AddEventHandler("rpv_prisonnpc:maymuncuk", function()
+RegisterServerEvent("rpv_prisonnpc:lockpick")
+AddEventHandler("rpv_prisonnpc:lockpick", function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
 
@@ -87,15 +85,15 @@ AddEventHandler("rpv_prisonnpc:maymuncuk", function()
 	if xPlayer.getMoney() >= 300 then
         xPlayer.removeMoney(300)
         
-        aldi = true
-		xPlayer.addInventoryItem('lockpick', 1)        -- TriggerClientEvent("esx:showNotification",source,"You paid ~g~$"..totalBuyPrice.."~s~ for "..amountToBuy.."x ~y~"..itemLabel.."~s~")
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = '300$ a Maymuncuk aldın' })
-		TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: Kişi sana olan güveni 1+'})
+        took = true
+		xPlayer.addInventoryItem('lockpick', 1)      
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = 'You got a $ 300 lockpick' })
+		TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: One s trust in you 1+'})
 
 
 	else
 
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'Yeterli miktarda paran yok!'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You dont have enough money!'})
 				
 	end
 end)
@@ -111,15 +109,15 @@ AddEventHandler("rpv_prisonnpc:telefon", function()
 	if xPlayer.getMoney() >= 400 then
         xPlayer.removeMoney(400)
         
-        aldi = true
+        took = true
 		xPlayer.addInventoryItem('phone', 1)        -- TriggerClientEvent("esx:showNotification",source,"You paid ~g~$"..totalBuyPrice.."~s~ for "..amountToBuy.."x ~y~"..itemLabel.."~s~")
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = '400$ a Telefon aldın' })
-		TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: Kişi sana olan güveni 1+'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = 'You got a phone for $ 400' })
+		TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: One s trust in you 1++'})
 
 
 	else
 
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'Yeterli miktarda paran yok!'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You dont have enough money!'})
 				
 	end
 end)
@@ -134,15 +132,15 @@ AddEventHandler("rpv_prisonnpc:telsiz", function()
 	if xPlayer.getMoney() >= 400 then
         xPlayer.removeMoney(400)
         
-        aldi = true
+        took = true
 		xPlayer.addInventoryItem('radio', 1)        -- TriggerClientEvent("esx:showNotification",source,"You paid ~g~$"..totalBuyPrice.."~s~ for "..amountToBuy.."x ~y~"..itemLabel.."~s~")
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = '400$ a Telsiz aldın' })
-		TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: Kişi sana olan güveni 1+'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = 'You got a radio for $ 400' })
+		TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: One s trust in you 1++'})
 
 
 	else
 
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'Yeterli miktarda paran yok!'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You dont have enough money!'})
 				
 	end
 end)
@@ -157,17 +155,17 @@ AddEventHandler("rpv_prisonnpc:bıçak", function()
 	if xPlayer.getMoney() >= 450 then
         xPlayer.removeMoney(450)
         
-        aldi = true
-		xPlayer.addInventoryItem('WEAPON_KNIFE', 1)        -- TriggerClientEvent("esx:showNotification",source,"You paid ~g~$"..totalBuyPrice.."~s~ for "..amountToBuy.."x ~y~"..itemLabel.."~s~")
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = '450$ a Bıçak aldın' })
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: Kişi sana olan güveni 2+'})
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'KİŞİ :: 7 dakikada bir gardiyanlar geziyor bıçağı saklamayı unutma '})
+        took = true
+		xPlayer.addInventoryItem('WEAPON_KNIFE', 1)      
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = 'You got a knife for $ 450' })
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'STATUS :: One s trust in you 2+'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'MAN :: Guards walk every 7 minutes and dont forget to hide the knife '})
 
 
 
 	else
 
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'Yeterli miktarda paran yok!'})
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You dont have enough money!'})
 				
 	end
 end)
